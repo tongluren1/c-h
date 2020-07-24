@@ -5,7 +5,7 @@ import pymysql
 
 
 class db:
-    def __init__(self, host_='localhost', port_=3306, user_='root', passwd_='123456', db_='crawler', charset_='utf8'):
+    def __init__(self, host_='localhost', port_=3306, user_='root', passwd_='123456', db_='crawler', charset_='utf8mb4'):
         self.db = pymysql.connect(host=host_, port=port_, user=user_, passwd=passwd_, db=db_, charset=charset_,
                                   cursorclass=pymysql.cursors.DictCursor)
 
