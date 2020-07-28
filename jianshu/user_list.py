@@ -97,10 +97,13 @@ def spider(url, db):
     return True
 
 urls = []
-page = 40
+page = 1
 url = 'https://www.jianshu.com/recommendations/users?page={}'
 
-while page <= 51:
+while page <= 200:
+    print('-------------------- page --------------------')
+    print('-------------------- ' + page + ' --------------------')
+    print('-------------------- page --------------------')
     page_url = url.format(page)
     flag = spider(page_url, db())
     if flag:

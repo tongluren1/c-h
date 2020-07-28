@@ -24,21 +24,38 @@ def spider(url, db, user):
     browser.get(url)
     html = browser.page_source
 
-    if len(html) > 20000:
+    if len(html) > 6000:
         box = re.compile(box_pattern, re.I).findall(html)
         intro = re.compile(intro_pattern, re.I).findall(html)
         for box_item in box:
             num_list = re.compile(des_pattern, re.I).findall(box_item)
-            print(num_list)
 
             tmp_list = {}
             tmp_list['UserId'] = user['UserId']
-            tmp_list['FocusNum'] = num_list[0]
-            tmp_list['FansNum'] = num_list[1]
-            tmp_list['ArticleNum'] = num_list[2]
-            tmp_list['WordsNum'] = num_list[3]
-            tmp_list['LikeNum'] = num_list[4]
-            tmp_list['Assets'] = num_list[5]
+            if len(num_list) > 0:
+                tmp_list['FocusNum'] = num_list[0]
+            else:
+                tmp_list['FocusNum'] = '0'
+            if len(num_list) > 1:
+                tmp_list['FansNum'] = num_list[1]
+            else:
+                tmp_list['FansNum'] = '0'
+            if len(num_list) > 2:
+                tmp_list['ArticleNum'] = num_list[2]
+            else:
+                tmp_list['ArticleNum'] = '0'
+            if len(num_list) > 3:
+                tmp_list['WordsNum'] = num_list[3]
+            else:
+                tmp_list['WordsNum'] = '0'
+            if len(num_list) > 4:
+                tmp_list['LikeNum'] = num_list[4]
+            else:
+                tmp_list['LikeNum'] = '0'
+            if len(num_list) > 5:
+                tmp_list['Assets'] = num_list[5]
+            else:
+                tmp_list['Assets'] = '0'
 
             if len(intro) > 0:
                 tmp_list['Aaying'] = intro[0].replace('"', '\'')
@@ -61,7 +78,7 @@ def spider(url, db, user):
                 print('------------- error ------------')
             else:
                 print(sql)
-        sleep(5)
+        sleep(10)
     return True
 
 
@@ -69,7 +86,8 @@ urls = []
 
 
 def getUserList(db):
-    sql = "select UserId, HomeUrl from jianshu_user order by ID desc;"
+    # sql = "select UserId, HomeUrl from jianshu_user order by ID desc;"
+    sql = "select UserId, HomeUrl from jianshu_user WHERE UserId NOT in (SELECT UserId from jianshu_user_info) order by ID desc;"
     return db.get_rows(sql)
 
 
