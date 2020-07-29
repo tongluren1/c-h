@@ -117,8 +117,7 @@ def spider(url, db):
 
 
 def getUserList(db):
-    # sql = "select ID, UserId, NickName, HomeUrl, IsNewUser, RecentUpdate from jianshu_user order by ID DESC;"
-    sql = "select ID, UserId, NickName, HomeUrl, IsNewUser, RecentUpdate from jianshu_user where IsNewUser = 'NO' order by ID DESC;"
+    sql = "select ID, UserId, NickName, HomeUrl, IsNewUser, RecentUpdate from jianshu_user order by ID DESC;"
     return db.get_rows(sql)
 
 
