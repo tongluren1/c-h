@@ -7,15 +7,16 @@ import re
 
 sys.path.append('..')
 from lib.db import db
+from jianshu_config import pattern_model
 
 chrome_options = Options()
 # 设置chrome浏览器无界面模式
 chrome_options.add_argument('--headless')
 browser = webdriver.Chrome(options=chrome_options)
 
-box_pattern = '(<div class="info">\s*?<ul>\s*?[\s\S]*?\s*?</ul>\s*?</div>\s*?</div>)'
-intro_pattern = '<div class="js-intro">([\s\S]*?)</div>'
-des_pattern = '<p>(\S+?)</p>'
+box_pattern = pattern_model['user_list_info']['box_pattern']
+intro_pattern = pattern_model['user_list_info']['intro_pattern']
+des_pattern = pattern_model['user_list_info']['des_pattern']
 
 base_url = 'https://www.jianshu.com'
 

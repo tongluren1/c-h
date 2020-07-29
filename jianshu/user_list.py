@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.options import Options
 import time
 from time import sleep
 import re
+from jianshu_config import pattern_model
 
 sys.path.append('..')
 from lib.db import db
@@ -13,16 +14,8 @@ chrome_options = Options()
 chrome_options.add_argument('--headless')
 browser = webdriver.Chrome(options=chrome_options)
 
-box_pattern = '(<div class="col-xs-8">[\s\S]*?</div>\s*?</div>\s*?</div>)'
-des_pattern = {
-    'UserId': '<a target="_blank" href="/users/(\S+?)">',
-    'NickName': '<h4 class="name">\s*?(\S*?)\s*?(?:</h4>|<i)',
-    'Sex': '<i class="iconfont ic-(\S+?)"></i>\s*?</h4>',
-    'HomeUrl': '<a target="_blank" href="(\S+?)">',
-    'Avatar': '<img class="avatar" src="(\S+?)"',
-    'Aaying': '<p class="description">\s*?([\s\S]*?)\s*?</p>',
-    'RecentUpdate': '<a class="new" target="_blank" href="(\S+?)">(\S+?)</a>',
-}
+box_pattern = pattern_model['user_list']['box_pattern']
+des_pattern = pattern_model['user_list']['des_pattern']
 
 error_num = 0
 
@@ -102,7 +95,7 @@ url = 'https://www.jianshu.com/recommendations/users?page={}'
 
 while page <= 200:
     print('-------------------- page --------------------')
-    print('-------------------- ' + page + ' --------------------')
+    print('-------------------- ' + str(page) + ' --------------------')
     print('-------------------- page --------------------')
     page_url = url.format(page)
     flag = spider(page_url, db())

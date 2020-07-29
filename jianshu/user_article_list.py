@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.options import Options
 import time
 from time import sleep
 import re
+import json
 from jianshu_config import pattern_model
 
 sys.path.append('..')
@@ -116,22 +117,45 @@ def spider(url, db):
 
 
 def getUserList(db):
-    sql = "select ID, UserId, NickName, HomeUrl, IsNewUser, ArticleUpdate from jianshu_user WHERE ID NOT in (SELECT DISTINCT UID from jianshu_article_list) order by ID DESC;"
+    # sql = "select ID, UserId, NickName, HomeUrl, IsNewUser, RecentUpdate from jianshu_user order by ID DESC;"
+    sql = "select ID, UserId, NickName, HomeUrl, IsNewUser, RecentUpdate from jianshu_user where IsNewUser = 'NO' order by ID DESC;"
     return db.get_rows(sql)
 
 
-for user in getUserList(db()):
-    page = 1
-    url = 'https://www.jianshu.com/u/' + user['UserId'] + '?order_by=shared_at&page={}'
-    while page <= 150:
-        print('-------------------- page --------------------')
-        print('-------------------- ' + user['NickName'] + ' : ' + str(page) + ' --------------------')
-        print('-------------------- page --------------------')
-        page_url = url.format(page)
-        print(page_url)
-        flag = spider(page_url, db())
-        if flag:
-            pass
-        else:
-            break
-        page = page + 1
+db = db()
+for user in getUserList(db):
+    if user['IsNewUser'] == 'YES':
+        page = 1
+        url = 'https://www.jianshu.com/u/' + user['UserId'] + '?order_by=shared_at&page={}'
+        while page <= 150:
+            print('-------------------- page --------------------')
+            print('-------------------- ' + user['NickName'] + ' : ' + str(page) + ' --------------------')
+            print('-------------------- page --------------------')
+            page_url = url.format(page)
+            print(page_url)
+            flag = spider(page_url, db)
+            if flag:
+                pass
+            else:
+                break
+            page = page + 1
+
+        update_sql = 'UPDATE jianshu_user SET IsNewUser = "NO" WHERE IsNewUser = "YES" AND ID = ' + str(user['ID'])
+        print(update_sql)
+        db.query(update_sql)
+    else:
+        recent_update = user['RecentUpdate']
+        recent_update = json.loads(recent_update)
+        for new_article in recent_update:
+            new_article_ID = list(new_article.keys())[0].replace('/p/', '')
+            new_article_title = list(new_article.values())[0]
+            new_article_title = new_article_title.replace('"', '\'')
+            new_article_title = new_article_title.replace("'", '\"').strip()
+
+            new_article_sql = "INSERT INTO jianshu_article_list (ArticleID, UID, Title, Status, AddTime, UpdateTime) VALUES	('%s', %s, '%s', '%s', '%s', '%s') ON DUPLICATE KEY UPDATE Title = '%s';" % (
+                new_article_ID, user['ID'], new_article_title, 'RECENT_UPDATE',
+                time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+                time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), new_article_title)
+            print(new_article_sql)
+            db.db_reconnect()
+            db.query(new_article_sql)

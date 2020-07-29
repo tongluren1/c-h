@@ -5,7 +5,8 @@ import pymysql
 
 
 class db:
-    def __init__(self, host_='localhost', port_=3306, user_='root', passwd_='123456', db_='crawler', charset_='utf8mb4'):
+    def __init__(self, host_='localhost', port_=3306, user_='root', passwd_='123456', db_='crawler',
+                 charset_='utf8mb4'):
         self.db = pymysql.connect(host=host_, port=port_, user=user_, passwd=passwd_, db=db_, charset=charset_,
                                   cursorclass=pymysql.cursors.DictCursor)
 
@@ -14,6 +15,13 @@ class db:
         cursor.execute(sql_)
         data = cursor.fetchone()
         return data
+
+    def query(self, sql_):
+        cursor = self.db.cursor()
+        cursor.execute(sql_)
+        self.db.commit()
+        cursor.close()
+        self.db.close()
 
     def get_rows(self, sql_):
         cursor = self.db.cursor()
@@ -39,3 +47,6 @@ class db:
 
     def db_close(self):
         self.db.close()
+
+    def db_reconnect(self):
+        self.db.ping(reconnect=True)
