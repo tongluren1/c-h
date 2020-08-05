@@ -1,5 +1,5 @@
 # -*- coding: utf-8
-import sys,os
+import sys, os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import time
@@ -9,7 +9,6 @@ from jianshu_config import pattern_model
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.db import db
-sys.setdefaultencoding('utf8')
 
 chrome_options = Options()
 # 设置chrome浏览器无界面模式
@@ -74,15 +73,15 @@ def spider(url, db):
             value_str = "','".join(tmp_list.values())
             value_str = "'" + value_str + "'"
             sql = "insert into jianshu_user (%s) values (%s) on duplicate key update NickName = '%s', RecentUpdate = '%s'; " % (
-            colnum_str, value_str, tmp_list['NickName'], tmp_list['RecentUpdate'])
+                colnum_str, value_str, tmp_list['NickName'], tmp_list['RecentUpdate'])
             try:
                 db.get_row(sql)
             except BaseException:
                 print('------------- error ------------')
-                print(sql)
+                print(sql.decode('utf-8'))
                 print('------------- error ------------')
             else:
-                print(sql)
+                print(sql.decode('utf-8'))
         sleep(8)
         error_num = 0
     else:
@@ -90,6 +89,7 @@ def spider(url, db):
             return False
         error_num = error_num + 1
     return True
+
 
 urls = []
 page = 1
