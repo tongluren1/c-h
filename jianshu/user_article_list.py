@@ -1,5 +1,5 @@
 # -*- coding: utf-8
-import sys
+import sys, os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import time
@@ -8,7 +8,7 @@ import re
 import json
 from jianshu_config import pattern_model
 
-sys.path.append('..')
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.db import db
 
 chrome_options = Options()
@@ -103,10 +103,11 @@ def spider(url, db):
                 error_num = 0
             except BaseException:
                 print('------------- error ------------')
-                print(sql)
+                print(sql.encode('utf-8'))
                 print('------------- error ------------')
             else:
-                print(sql)
+                pass
+                # print(sql.encode('utf-8'))
     else:
         error_num = error_num + 1
 
@@ -129,7 +130,8 @@ for user in getUserList(db):
         url = 'https://www.jianshu.com/u/' + user['UserId'] + '?order_by=shared_at&page={}'
         while page <= 150:
             print('-------------------- page --------------------')
-            print('-------------------- ' + user['NickName'] + ' : ' + str(page) + ' --------------------')
+            print('-------------------- ' + user['NickName'].encode('utf-8') + ' : ' + str(
+                page) + ' --------------------')
             print('-------------------- page --------------------')
             page_url = url.format(page)
             print(page_url)
@@ -141,8 +143,8 @@ for user in getUserList(db):
             page = page + 1
 
         update_sql = 'UPDATE jianshu_user SET IsNewUser = "NO" WHERE IsNewUser = "YES" AND ID = ' + str(user['ID'])
-        print(update_sql)
         db.query(update_sql)
+        print(update_sql.encode('utf-8'))
     else:
         recent_update = user['RecentUpdate']
         recent_update = json.loads(recent_update)
@@ -156,6 +158,6 @@ for user in getUserList(db):
                 new_article_ID, user['ID'], new_article_title, 'RECENT_UPDATE',
                 time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
                 time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), new_article_title)
-            print(new_article_sql)
             db.db_reconnect()
             db.query(new_article_sql)
+            print(new_article_sql.encode('utf-8'))

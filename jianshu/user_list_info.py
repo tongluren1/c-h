@@ -1,12 +1,12 @@
 # -*- coding: utf-8
-import sys
+import sys, os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import time
 from time import sleep
 import re
 
-sys.path.append('..')
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.db import db
 from jianshu_config import pattern_model
 
@@ -76,10 +76,11 @@ def spider(url, db, user):
                 db.get_row(sql)
             except BaseException:
                 print('------------- error ------------')
-                print(sql)
+                print(sql.encode('utf-8'))
                 print('------------- error ------------')
             else:
-                print(sql)
+                pass
+                # print(sql.encode('utf-8'))
         sleep(10)
     return True
 
@@ -98,4 +99,4 @@ for item in user_list:
     url = base_url + item['HomeUrl']
     flag = spider(url, db(), item)
     if flag:
-        print(item['UserId']+'succ')
+        print(item['UserId'] + 'succ')

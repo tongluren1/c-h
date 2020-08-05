@@ -81,7 +81,8 @@ def spider(url, db):
                 print(sql.encode('utf-8'))
                 print('------------- error ------------')
             else:
-                print(sql.encode('utf-8'))
+                pass
+                # print(sql.encode('utf-8'))
         sleep(8)
         error_num = 0
     else:
