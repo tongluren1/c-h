@@ -9,6 +9,7 @@ from jianshu_config import pattern_model
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.db import db
+sys.setdefaultencoding('utf8')
 
 chrome_options = Options()
 # 设置chrome浏览器无界面模式
