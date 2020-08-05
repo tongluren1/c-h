@@ -78,10 +78,10 @@ def spider(url, db):
                 db.get_row(sql)
             except BaseException:
                 print('------------- error ------------')
-                print(sql.decode('utf-8'))
+                print(sql.encode('utf-8'))
                 print('------------- error ------------')
             else:
-                print(sql.decode('utf-8'))
+                print(sql.encode('utf-8'))
         sleep(8)
         error_num = 0
     else:
