@@ -1,5 +1,5 @@
 # -*- coding: utf-8
-import sys
+import sys,os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import time
@@ -7,7 +7,7 @@ from time import sleep
 import re
 from jianshu_config import pattern_model
 
-sys.path.append('..')
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.db import db
 
 chrome_options = Options()
