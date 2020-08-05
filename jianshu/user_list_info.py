@@ -60,8 +60,7 @@ def spider(url, db, user):
                 tmp_list['Assets'] = '0'
 
             if len(intro) > 0:
-                tmp_list['Aaying'] = intro[0].replace('"', '\'')
-                tmp_list['Aaying'] = tmp_list['Aaying'].replace("'", '\"')
+                tmp_list['Aaying'] = db.self_escape_string(intro[0])
 
             tmp_list['UpdateTime'] = tmp_list['AddTime'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 

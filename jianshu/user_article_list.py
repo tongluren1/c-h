@@ -54,13 +54,11 @@ def spider(url, db):
             tmp_list['ArticleID'] = ArticleID[0]
             tmp_list['NoteId'] = NoteId[0]
             tmp_list['Title'] = Title[0]
-            tmp_list['Title'] = tmp_list['Title'].replace('"', '\'')
-            tmp_list['Title'] = tmp_list['Title'].replace("'", '\"').strip()
+            tmp_list['Title'] = db.self_escape_string(tmp_list['Title'])
 
             if len(Abstract) > 0:
                 tmp_list['Abstract'] = Abstract[0]
-                tmp_list['Abstract'] = tmp_list['Abstract'].replace('"', '\'')
-                tmp_list['Abstract'] = tmp_list['Abstract'].replace("'", '\"').strip()
+                tmp_list['Abstract'] = db.self_escape_string(tmp_list['Abstract'])
             else:
                 tmp_list['Abstract'] = ''
             if len(Paid) > 0:
@@ -151,8 +149,7 @@ for user in getUserList(db):
         for new_article in recent_update:
             new_article_ID = list(new_article.keys())[0].replace('/p/', '')
             new_article_title = list(new_article.values())[0]
-            new_article_title = new_article_title.replace('"', '\'')
-            new_article_title = new_article_title.replace("'", '\"').strip()
+            new_article_title = db.self_escape_string(new_article_title)
 
             new_article_sql = "INSERT INTO jianshu_article_list (ArticleID, UID, Title, Status, AddTime, UpdateTime) VALUES	('%s', %s, '%s', '%s', '%s', '%s') ON DUPLICATE KEY UPDATE Title = '%s';" % (
                 new_article_ID, user['ID'], new_article_title, 'RECENT_UPDATE',

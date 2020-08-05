@@ -45,7 +45,7 @@ def spider(url, db):
                 continue
 
             tmp_list['UserId'] = UserId[0]
-            tmp_list['NickName'] = NickName[0]
+            tmp_list['NickName'] = db.self_escape_string(NickName[0])
 
             if len(Sex) > 0:
                 tmp_list['Sex'] = Sex[0]
@@ -54,7 +54,7 @@ def spider(url, db):
             if len(Avatar) > 0:
                 tmp_list['Avatar'] = Avatar[0]
             if len(Aaying) > 0:
-                tmp_list['Aaying'] = Aaying[0]
+                tmp_list['Aaying'] = db.self_escape_string(Aaying[0])
 
             tmp_list['RecentUpdate'] = ''
             if len(RecentUpdate) > 0:
@@ -63,8 +63,7 @@ def spider(url, db):
                     tmp_.append('{"' + Recent[0] + '":"' + Recent[1] + '"}')
                 tmp_list['RecentUpdate'] = ','.join(tmp_)
                 tmp_list['RecentUpdate'] = '[' + tmp_list['RecentUpdate'] + ']'
-                tmp_list['RecentUpdate'] = tmp_list['RecentUpdate'].replace('"', '\'')
-                tmp_list['RecentUpdate'] = tmp_list['RecentUpdate'].replace("'", '\"')
+                tmp_list['RecentUpdate'] = db.self_escape_string(tmp_list['RecentUpdate'])
 
             tmp_list['AddTime'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             tmp_list['UpdateTime'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())

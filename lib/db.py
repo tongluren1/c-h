@@ -50,3 +50,6 @@ class db:
 
     def db_reconnect(self):
         self.db.ping(reconnect=True)
+
+    def self_escape_string(self, string):
+        return pymysql.escape_string(value=string)
