@@ -14,7 +14,6 @@ from lib.db import db
 chrome_options = Options()
 # 设置chrome浏览器无界面模式
 chrome_options.add_argument('--headless')
-chrome_options.add_argument('--headless')
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
 chrome_options.add_argument('--disable-gpu')
@@ -101,7 +100,7 @@ def spider(url, db):
                 colnum_str, value_str, tmp_list['Title'], tmp_list['Abstract'], tmp_list['Paid'], tmp_list['ReadNum'],
                 tmp_list['CommentsNum'], tmp_list['LikeNum'])
             try:
-                db.query(sql.encode('utf-8'))
+                db.query(sql)
                 error_num = 0
             except BaseException:
                 print('------------- error ------------')
@@ -160,7 +159,7 @@ for user in getUserList(db):
                 time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
                 time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), new_article_title)
             db.db_reconnect()
-            db.query(new_article_sql.encode('utf-8'))
+            db.query(new_article_sql)
             print(new_article_sql.encode('utf-8'))
 
 browser.quit()
