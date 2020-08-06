@@ -57,11 +57,11 @@ def spider(url, db):
             tmp_list['ArticleID'] = ArticleID[0]
             tmp_list['NoteId'] = NoteId[0]
             tmp_list['Title'] = Title[0]
-            tmp_list['Title'] = db.self_escape_string(tmp_list['Title'])
+            tmp_list['Title'] = db.self_escape_string(tmp_list['Title']).strip()
 
             if len(Abstract) > 0:
                 tmp_list['Abstract'] = Abstract[0]
-                tmp_list['Abstract'] = db.self_escape_string(tmp_list['Abstract'])
+                tmp_list['Abstract'] = db.self_escape_string(tmp_list['Abstract']).strip()
             else:
                 tmp_list['Abstract'] = ''
             if len(Paid) > 0:
@@ -100,7 +100,7 @@ def spider(url, db):
                 colnum_str, value_str, tmp_list['Title'], tmp_list['Abstract'], tmp_list['Paid'], tmp_list['ReadNum'],
                 tmp_list['CommentsNum'], tmp_list['LikeNum'])
             try:
-                db.query(sql.strip())
+                db.query(sql)
                 error_num = 0
             except BaseException:
                 print('------------- error ------------')
