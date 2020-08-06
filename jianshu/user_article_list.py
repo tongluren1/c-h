@@ -30,7 +30,6 @@ def spider(url, db):
 
     browser.get(url)
     html = browser.page_source
-    browser.close()
 
     if len(html) > 10000:
         box = re.compile(box_pattern, re.I).findall(html)
