@@ -57,11 +57,11 @@ def spider(url, db):
             tmp_list['ArticleID'] = ArticleID[0]
             tmp_list['NoteId'] = NoteId[0]
             tmp_list['Title'] = Title[0]
-            tmp_list['Title'] = db.self_escape_string(tmp_list['Title']).strip()
+            tmp_list['Title'] = db.self_escape_string(tmp_list['Title']).strip('\\n').strip()
 
             if len(Abstract) > 0:
                 tmp_list['Abstract'] = Abstract[0]
-                tmp_list['Abstract'] = db.self_escape_string(tmp_list['Abstract']).strip()
+                tmp_list['Abstract'] = db.self_escape_string(tmp_list['Abstract']).strip('\\n').strip()
             else:
                 tmp_list['Abstract'] = ''
             if len(Paid) > 0:
