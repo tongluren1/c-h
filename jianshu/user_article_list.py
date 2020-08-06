@@ -101,7 +101,7 @@ def spider(url, db):
                 colnum_str, value_str, tmp_list['Title'], tmp_list['Abstract'], tmp_list['Paid'], tmp_list['ReadNum'],
                 tmp_list['CommentsNum'], tmp_list['LikeNum'])
             try:
-                db.get_row(sql)
+                db.query(sql.encode('utf-8'))
                 error_num = 0
             except BaseException:
                 print('------------- error ------------')
@@ -160,7 +160,7 @@ for user in getUserList(db):
                 time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
                 time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), new_article_title)
             db.db_reconnect()
-            db.query(new_article_sql)
+            db.query(new_article_sql.encode('utf-8'))
             print(new_article_sql.encode('utf-8'))
 
 browser.quit()
