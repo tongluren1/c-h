@@ -100,7 +100,7 @@ def spider(url, db):
                 colnum_str, value_str, tmp_list['Title'], tmp_list['Abstract'], tmp_list['Paid'], tmp_list['ReadNum'],
                 tmp_list['CommentsNum'], tmp_list['LikeNum'])
             try:
-                db.get_row(sql)
+                db.query(sql.strip())
                 error_num = 0
             except BaseException:
                 print('------------- error ------------')
