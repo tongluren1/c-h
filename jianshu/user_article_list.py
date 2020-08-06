@@ -14,6 +14,10 @@ from lib.db import db
 chrome_options = Options()
 # 设置chrome浏览器无界面模式
 chrome_options.add_argument('--headless')
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
+chrome_options.add_argument('--disable-gpu')
 browser = webdriver.Chrome(options=chrome_options)
 
 error_num = 0
@@ -161,4 +165,3 @@ for user in getUserList(db):
             print(new_article_sql.encode('utf-8'))
 
 browser.quit()
-
