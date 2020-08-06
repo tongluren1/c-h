@@ -160,7 +160,7 @@ for user in getUserList(db):
                 time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), new_article_title)
             db.db_reconnect()
             db.query(new_article_sql)
-            db.db_close()
+            db.commit()
             print(new_article_sql.encode('utf-8'))
 
 browser.quit()
