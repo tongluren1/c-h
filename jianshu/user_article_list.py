@@ -99,15 +99,15 @@ def spider(url, db):
             sql = "insert into jianshu_article_list (%s) values (%s) on duplicate key update Title = '%s',Abstract = '%s',Paid = '%s',ReadNum = '%s',CommentsNum = '%s',LikeNum = '%s'; " % (
                 colnum_str, value_str, tmp_list['Title'], tmp_list['Abstract'], tmp_list['Paid'], tmp_list['ReadNum'],
                 tmp_list['CommentsNum'], tmp_list['LikeNum'])
-            # try:
-            db.query(sql)
-            error_num = 0
-            # except BaseException:
-            #     print('------------- error ------------')
-            #     print(sql.encode('utf-8'))
-            #     print('------------- error ------------')
-            # else:
-            #     pass
+            try:
+                db.query(sql)
+                error_num = 0
+            except BaseException:
+                print('------------- error ------------')
+                print(sql.encode('utf-8'))
+                print('------------- error ------------')
+            else:
+                pass
                 # print(sql.encode('utf-8'))
     else:
         error_num = error_num + 1
@@ -160,6 +160,7 @@ for user in getUserList(db):
                 time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), new_article_title)
             db.db_reconnect()
             db.query(new_article_sql)
+            db.db_close()
             print(new_article_sql.encode('utf-8'))
 
 browser.quit()
