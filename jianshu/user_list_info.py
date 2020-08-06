@@ -14,6 +14,7 @@ chrome_options = Options()
 # 设置chrome浏览器无界面模式
 chrome_options.add_argument('--headless')
 browser = webdriver.Chrome(options=chrome_options)
+browser.quit()
 
 box_pattern = pattern_model['user_list_info']['box_pattern']
 intro_pattern = pattern_model['user_list_info']['intro_pattern']
