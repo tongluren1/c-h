@@ -100,6 +100,7 @@ def spider(url, db):
                 colnum_str, value_str, tmp_list['Title'], tmp_list['Abstract'], tmp_list['Paid'], tmp_list['ReadNum'],
                 tmp_list['CommentsNum'], tmp_list['LikeNum'])
             try:
+                db.db_reconnect()
                 db.query(sql)
                 error_num = 0
             except BaseException:
@@ -144,6 +145,7 @@ for user in getUserList(db):
             page = page + 1
 
         update_sql = 'UPDATE jianshu_user SET IsNewUser = "NO" WHERE IsNewUser = "YES" AND ID = ' + str(user['ID'])
+        db.db_reconnect()
         db.query(update_sql)
         print(update_sql.encode('utf-8'))
     else:
@@ -160,7 +162,6 @@ for user in getUserList(db):
                 time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), new_article_title)
             db.db_reconnect()
             db.query(new_article_sql)
-            db.commit()
             print(new_article_sql.encode('utf-8'))
 
 browser.quit()
