@@ -26,6 +26,7 @@ def spider(url, db):
 
     browser.get(url)
     html = browser.page_source
+    browser.close()
 
     if len(html) > 20000:
         box = re.compile(box_pattern, re.I).findall(html)
@@ -106,3 +107,5 @@ while page <= 200:
     else:
         break
     page = page + 1
+
+browser.quit()

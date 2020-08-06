@@ -25,6 +25,7 @@ base_url = 'https://www.jianshu.com'
 def spider(url, db, user):
     browser.get(url)
     html = browser.page_source
+    browser.close()
 
     if len(html) > 6000:
         box = re.compile(box_pattern, re.I).findall(html)
@@ -99,3 +100,6 @@ for item in user_list:
     flag = spider(url, db(), item)
     if flag:
         print(item['UserId'] + 'succ')
+
+
+browser.quit()
