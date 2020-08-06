@@ -14,7 +14,6 @@ chrome_options = Options()
 # 设置chrome浏览器无界面模式
 chrome_options.add_argument('--headless')
 browser = webdriver.Chrome(options=chrome_options)
-browser.quit()
 
 box_pattern = pattern_model['user_list_info']['box_pattern']
 intro_pattern = pattern_model['user_list_info']['intro_pattern']
@@ -26,7 +25,6 @@ base_url = 'https://www.jianshu.com'
 def spider(url, db, user):
     browser.get(url)
     html = browser.page_source
-    browser.close()
 
     if len(html) > 6000:
         box = re.compile(box_pattern, re.I).findall(html)

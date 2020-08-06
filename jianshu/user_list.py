@@ -14,7 +14,6 @@ chrome_options = Options()
 # 设置chrome浏览器无界面模式
 chrome_options.add_argument('--headless')
 browser = webdriver.Chrome(options=chrome_options)
-browser.quit()
 
 box_pattern = pattern_model['user_list']['box_pattern']
 des_pattern = pattern_model['user_list']['des_pattern']
@@ -27,7 +26,6 @@ def spider(url, db):
 
     browser.get(url)
     html = browser.page_source
-    browser.close()
 
     if len(html) > 20000:
         box = re.compile(box_pattern, re.I).findall(html)
