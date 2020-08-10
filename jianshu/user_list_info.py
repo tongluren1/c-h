@@ -9,6 +9,7 @@ import re
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.db import db
 from jianshu_config import pattern_model
+import time
 
 chrome_options = Options()
 # 设置chrome浏览器无界面模式
@@ -24,6 +25,7 @@ des_pattern = pattern_model['user_list_info']['des_pattern']
 
 base_url = 'https://www.jianshu.com'
 
+print('starttime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
 def spider(url, db, user):
     browser.get(url)
@@ -105,3 +107,4 @@ for item in user_list:
 
 
 browser.quit()
+print('endtime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))

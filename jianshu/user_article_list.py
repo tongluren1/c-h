@@ -23,6 +23,8 @@ error_num = 0
 box_pattern = pattern_model['article_list']['box_pattern']
 des_pattern = pattern_model['article_list']['des_pattern']
 
+print('starttime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+
 
 def spider(url, db):
     global error_num
@@ -165,3 +167,4 @@ for user in getUserList(db):
             print(new_article_sql.encode('utf-8'))
 
 browser.quit()
+print('endtime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))

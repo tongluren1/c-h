@@ -22,6 +22,7 @@ box_pattern = pattern_model['user_list']['box_pattern']
 des_pattern = pattern_model['user_list']['des_pattern']
 
 error_num = 0
+print('starttime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
 
 def spider(url, db):
@@ -111,3 +112,4 @@ while page <= 200:
     page = page + 1
 
 browser.quit()
+print('endtime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
