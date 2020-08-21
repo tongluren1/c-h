@@ -31,8 +31,6 @@ def spider(url, db):
 
     if len(html) > 10000:
         box = re.compile(box_pattern, re.I).findall(html)
-        print(box)
-        quit()
         for box_item in box:
             UserId = re.compile(des_pattern['UserId'], re.I).findall(box_item)
             NickName = re.compile(des_pattern['NickName'], re.I).findall(box_item)
