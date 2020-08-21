@@ -38,7 +38,7 @@ pattern_model = {
         'box_pattern': '(<li>\s*?<a class="avatar"[\s\S]*?</li>)',
         'des_pattern': {
             'UserId': '<a class="avatar" href="/u/(\S*?)">',
-            'NickName': '<a class="name" href="/u/[\S*?]">(\S*?)</a>',
+            'NickName': '<a class="name" href="/u/\S*?">(\S*?)</a>',
             'Sex': '<i class="iconfont ic-(\S+?)"></i>',
             'HomeUrl': '<a class="avatar" href="(\S*?)">',
             'Avatar': '<img src="([\s\S]*?)"[\s\S]*?/>',
