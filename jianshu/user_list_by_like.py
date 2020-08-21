@@ -29,6 +29,8 @@ def spider(url, db):
     browser.get(url)
     html = browser.page_source
 
+    print(len(html))
+    quit()
     if len(html) > 20000:
         box = re.compile(box_pattern, re.I).findall(html)
         for box_item in box:
