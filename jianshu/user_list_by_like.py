@@ -31,6 +31,7 @@ def spider(url, db):
 
     print(len(html))
     print(html)
+    print(url)
     if len(html) > 6000:
         box = re.compile(box_pattern, re.I).findall(html)
         for box_item in box:
