@@ -75,16 +75,14 @@ def spider(url, db):
             value_str = "'" + value_str + "'"
             sql = "insert into jianshu_user (%s) values (%s) on duplicate key update NickName = '%s'; " % (
                 colnum_str, value_str, tmp_list['NickName'])
-            print(sql)
-            quit()
-            # try:
-            #     db.get_row(sql)
-            # except BaseException:
-            #     print('------------- error ------------')
-            #     print(sql.encode('utf-8'))
-            #     print('------------- error ------------')
-            # else:
-            #     pass
+            try:
+                db.get_row(sql)
+            except BaseException:
+                print('------------- error ------------')
+                print(sql.encode('utf-8'))
+                print('------------- error ------------')
+            else:
+                pass
                 # print(sql.encode('utf-8'))
         sleep(8)
     return True
