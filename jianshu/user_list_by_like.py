@@ -30,8 +30,8 @@ def spider(url, db):
     html = browser.page_source
 
     print(len(html))
-    quit()
-    if len(html) > 20000:
+    print(html)
+    if len(html) > 6000:
         box = re.compile(box_pattern, re.I).findall(html)
         for box_item in box:
             UserId = re.compile(des_pattern['UserId'], re.I).findall(box_item)
