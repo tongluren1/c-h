@@ -35,15 +35,13 @@ pattern_model = {
         'des_pattern': '<p>(\S+?)</p>'
     },
     'like_user_list': {
-        'box_pattern': '(<ul class="user-list"[\s\S]*?>[\s\S]*?</ul>)',
+        'box_pattern': '(<li>\s*?<a class="avatar"[\s\S]*?</li>)',
         'des_pattern': {
             'UserId': '<a class="avatar" href="/u/(\S*?)">',
             'NickName': '<a class="name" href="/u/[\S*?]">(\S*?)</a>',
             'Sex': '<i class="iconfont ic-(\S+?)"></i>',
             'HomeUrl': '<a class="avatar" href="(\S*?)">',
             'Avatar': '<img src="([\s\S]*?)"[\s\S]*?/>',
-            # 'Aaying': '<p class="description">\s*?([\s\S]*?)\s*?</p>',
-            # 'RecentUpdate': '<a class="new" target="_blank" href="(\S+?)">(\S+?)</a>',
         }
     },
 }
