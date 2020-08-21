@@ -102,7 +102,7 @@ user_list = getUserList(db());
 type_list = ['following', 'followers']
 for user in user_list:
     for type_ in type_list:
-        url = base_url + 'users/' + type_
+        url = base_url + 'users/' + user['UserId'] + '/' + type_
         flag = spider(url, db())
 
 browser.quit()
