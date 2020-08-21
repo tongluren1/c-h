@@ -42,6 +42,13 @@ def spider(url, db):
             # Aaying = re.compile(des_pattern['Aaying'], re.I).findall(box_item)
             # RecentUpdate = re.compile(des_pattern['RecentUpdate'], re.I).findall(box_item)
 
+            print(UserId)
+            print(NickName)
+            print(Sex)
+            print(HomeUrl)
+            print(Avatar)
+            quit()
+
             tmp_list = {}
             if len(UserId) == 0 or UserId[0].isspace() == True:
                 continue
