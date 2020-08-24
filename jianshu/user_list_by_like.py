@@ -95,6 +95,7 @@ type_list = ['following', 'followers']
 for user in user_list:
     for type_ in type_list:
         url = base_url + 'users/' + user['UserId'] + '/' + type_ + '?page={}'
+        page = 1
         while page <= 99999:
             print('-------------------- page --------------------')
             print('-------------------- ' + str(page) + ' --------------------')
