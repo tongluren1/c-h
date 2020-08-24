@@ -31,7 +31,7 @@ def spider(url, db):
     browser.get(url)
     html = browser.page_source
 
-    if len(html) > 16000:
+    if len(html) > 18000:
         box = re.compile(box_pattern, re.I).findall(html)
         for box_item in box:
             UserId = re.compile(des_pattern['UserId'], re.I).findall(box_item)
