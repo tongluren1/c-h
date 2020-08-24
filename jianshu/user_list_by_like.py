@@ -34,7 +34,7 @@ def spider(url, db):
     print(html)
     print(url)
     print(len(html))
-    if len(html) > 10000:
+    if len(html) > 20000:
         box = re.compile(box_pattern, re.I).findall(html)
         print(box)
         for box_item in box:
@@ -89,7 +89,7 @@ def spider(url, db):
 
 
 def getUserList(db):
-    sql = "select UserId, NickName from jianshu_user order by ID desc;"
+    sql = "select UserId, NickName from jianshu_user where ID = 1 order by ID desc;"
     return db.get_rows(sql)
 
 
