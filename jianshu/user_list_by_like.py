@@ -22,10 +22,12 @@ browser = webdriver.Chrome(options=chrome_options)
 box_pattern = pattern_model['like_user_list']['box_pattern']
 des_pattern = pattern_model['like_user_list']['des_pattern']
 
+error_num = 0
 print('starttime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
 
 def spider(url, db):
+    global error_num
     browser.get(url)
     html = browser.page_source
 
@@ -55,17 +57,6 @@ def spider(url, db):
                 tmp_list['HomeUrl'] = HomeUrl[0]
             if len(Avatar) > 0:
                 tmp_list['Avatar'] = Avatar[0]
-            # if len(Aaying) > 0:
-            #     tmp_list['Aaying'] = db.self_escape_string(Aaying[0])
-
-            # tmp_list['RecentUpdate'] = ''
-            # if len(RecentUpdate) > 0:
-            #     tmp_ = []
-            #     for Recent in RecentUpdate:
-            #         tmp_.append('{"' + Recent[0] + '":"' + Recent[1] + '"}')
-            #     tmp_list['RecentUpdate'] = ','.join(tmp_)
-            #     tmp_list['RecentUpdate'] = '[' + tmp_list['RecentUpdate'] + ']'
-            #     tmp_list['RecentUpdate'] = db.self_escape_string(tmp_list['RecentUpdate'])
 
             tmp_list['AddTime'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             tmp_list['UpdateTime'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
@@ -85,6 +76,11 @@ def spider(url, db):
                 pass
                 # print(sql.encode('utf-8'))
         sleep(8)
+        error_num = 0
+    else:
+        if error_num > 2:
+            return False
+        error_num = error_num + 1
     return True
 
 
@@ -97,8 +93,20 @@ user_list = getUserList(db());
 type_list = ['following', 'followers']
 for user in user_list:
     for type_ in type_list:
-        url = base_url + 'users/' + user['UserId'] + '/' + type_
-        flag = spider(url, db())
+        url = base_url + 'users/' + user['UserId'] + '/' + type_ + '?page={}'
+        while page <= 200:
+            print('-------------------- page --------------------')
+            print('-------------------- ' + str(page) + ' --------------------')
+            print('-------------------- page --------------------')
+            page_url = url.format(page)
+            flag = spider(page_url, db())
+            if flag:
+                pass
+            else:
+                break
+            page = page + 1
+        # url = base_url + 'users/' + user['UserId'] + '/' + type_
+        # flag = spider(url, db())
 
 browser.quit()
 print('endtime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
