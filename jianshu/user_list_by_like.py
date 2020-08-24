@@ -23,7 +23,6 @@ box_pattern = pattern_model['like_user_list']['box_pattern']
 des_pattern = pattern_model['like_user_list']['des_pattern']
 
 error_num = 0
-print(error_num)
 print('starttime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
 
