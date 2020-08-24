@@ -51,7 +51,7 @@ def spider(url, db):
             tmp_list['UserId'] = UserId[0]
             tmp_list['NickName'] = db.self_escape_string(NickName[0])
 
-            if len(Sex) > 0:
+            if len(Sex) > 0 and not (Sex[0] == 'follow'):
                 tmp_list['Sex'] = Sex[0]
             if len(HomeUrl) > 0:
                 tmp_list['HomeUrl'] = HomeUrl[0]
@@ -85,7 +85,7 @@ def spider(url, db):
 
 
 def getUserList(db):
-    sql = "select UserId, NickName from jianshu_user where ID = 1 order by ID desc;"
+    sql = "select UserId, NickName from jianshu_user order by ID desc;"
     return db.get_rows(sql)
 
 
