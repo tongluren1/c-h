@@ -98,7 +98,7 @@ for user in user_list:
         url = base_url + 'users/' + user['UserId'] + '/' + type_ + '?page={}'
         page = 1
         while page <= 99999:
-            page_url = url.format(page)
+            page_url = 'https://www.jianshu.com/users/ea592a37efc5/following?page=24'
             print('-------------------- page --------------------')
             print('-------------------- user: ' + user['UserId'] + ' page: ' + str(
                 page) + ' url: ' + page_url + ' --------------------')
