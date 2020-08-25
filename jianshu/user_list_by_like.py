@@ -98,7 +98,7 @@ for user in user_list:
         page = 1
         while page <= 99999:
             print('-------------------- page --------------------')
-            print('-------------------- ' + str(page) + ' --------------------')
+            print('-------------------- user: ' + user['UserId'] + ' page: ' + str(page) + ' --------------------')
             print('-------------------- page --------------------')
             page_url = url.format(page)
             flag = spider(page_url, db())
