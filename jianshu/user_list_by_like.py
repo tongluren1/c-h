@@ -32,6 +32,7 @@ def spider(url, db):
     html = browser.page_source
     box = re.compile(box_pattern, re.I).findall(html)
 
+    print(len(box))
     if len(box) > 0:
         box = re.compile(box_pattern, re.I).findall(html)
         for box_item in box:
