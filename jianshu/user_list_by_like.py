@@ -32,6 +32,8 @@ def spider(url, db):
     html = browser.page_source
     box = re.compile(box_pattern, re.I).findall(html)
 
+    print(html)
+    print(box)
     print(len(box))
     if len(box) > 1:
         box = re.compile(box_pattern, re.I).findall(html)
@@ -104,6 +106,7 @@ for user in user_list:
                 page) + ' url: ' + page_url + ' --------------------')
             print('-------------------- page --------------------')
             flag = spider(page_url, db())
+            quit()
             if flag:
                 pass
             else:
