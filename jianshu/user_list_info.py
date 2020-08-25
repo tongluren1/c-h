@@ -12,7 +12,7 @@ from jianshu_config import pattern_model
 import time
 
 # 关闭当前文件进程
-os.system("ps -ef|grep "+__file__+"|awk '{print $2}'|xargs kill -9")
+os.system("ps -ef|grep " + __file__ + "|awk '{print $2}'|xargs kill -9")
 # 关闭当 chrome 进程
 os.system("ps -ef|grep chrome|awk '{print $2}'|xargs kill -9")
 
@@ -31,6 +31,7 @@ des_pattern = pattern_model['user_list_info']['des_pattern']
 base_url = 'https://www.jianshu.com'
 
 print('starttime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+
 
 def spider(url, db, user):
     browser.get(url)
@@ -81,11 +82,15 @@ def spider(url, db, user):
                 colnum_str, value_str, tmp_list['Aaying'], tmp_list['FocusNum'], tmp_list['FansNum'],
                 tmp_list['ArticleNum'],
                 tmp_list['WordsNum'], tmp_list['LikeNum'], tmp_list['Assets'])
+            sql_ = "UPDATE jianshu_user SET Aaying = '" + tmp_list['Aaying'] + "' WHERE UserId = '" + tmp_list[
+                'UserId'] + "'"
             try:
                 db.get_row(sql)
+                db.get_row(sql_)
             except BaseException:
                 print('------------- error ------------')
                 print(sql.encode('utf-8'))
+                print(sql_.encode('utf-8'))
                 print('------------- error ------------')
             else:
                 pass
@@ -109,7 +114,6 @@ for item in user_list:
     flag = spider(url, db(), item)
     if flag:
         print(item['UserId'] + 'succ')
-
 
 browser.quit()
 print('endtime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
