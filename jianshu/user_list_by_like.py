@@ -31,6 +31,8 @@ def spider(url, db):
     browser.get(url)
     html = browser.page_source
 
+    print(html)
+    print(len(html))
     if len(html) > 18000:
         box = re.compile(box_pattern, re.I).findall(html)
         for box_item in box:
@@ -100,7 +102,9 @@ for user in user_list:
             print('-------------------- ' + str(page) + ' --------------------')
             print('-------------------- page --------------------')
             page_url = url.format(page)
+            page_url = 'https://www.jianshu.com/users/51b4ef597b53/followers?page=999999'
             flag = spider(page_url, db())
+            quit()
             if flag:
                 pass
             else:
