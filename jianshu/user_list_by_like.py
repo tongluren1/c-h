@@ -32,11 +32,7 @@ def spider(url, db):
     html = browser.page_source
     box = re.compile(box_pattern, re.I).findall(html)
 
-    print(html)
-    print(len(html))
-    print(box)
-    print(len(box))
-    if len(html) > 18000:
+    if len(box) > 0:
         box = re.compile(box_pattern, re.I).findall(html)
         for box_item in box:
             UserId = re.compile(des_pattern['UserId'], re.I).findall(box_item)
@@ -105,9 +101,7 @@ for user in user_list:
             print('-------------------- ' + str(page) + ' --------------------')
             print('-------------------- page --------------------')
             page_url = url.format(page)
-            page_url = 'https://www.jianshu.com/users/4d7cbbe6aa86/followers?page=999999'
             flag = spider(page_url, db())
-            quit()
             if flag:
                 pass
             else:
