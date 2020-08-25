@@ -23,11 +23,15 @@ box_pattern = pattern_model['like_user_list']['box_pattern']
 des_pattern = pattern_model['like_user_list']['des_pattern']
 
 error_num = 0
+last_box_num = 0
+last_user = {'UserId':''}
 print('starttime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
 
-def spider(url, db):
+def spider(url, db, user):
     global error_num
+    global last_box_num
+    global last_user
     browser.get(url)
     html = browser.page_source
     box = re.compile(box_pattern, re.I).findall(html)
@@ -35,6 +39,10 @@ def spider(url, db):
     print(html)
     print(box)
     print(len(box))
+    if user['UserId'] == last_user['UserId'] and last_box_num == len(box) and last_box_num < 9:
+        return False
+
+    last_box_num = len(box)
     if len(box) > 1:
         box = re.compile(box_pattern, re.I).findall(html)
         for box_item in box:
@@ -81,6 +89,7 @@ def spider(url, db):
                 # print(sql.encode('utf-8'))
         sleep(8)
         error_num = 0
+        last_user = user
     else:
         if error_num > 2:
             return False
@@ -105,7 +114,7 @@ for user in user_list:
             print('-------------------- user: ' + user['UserId'] + ' page: ' + str(
                 page) + ' url: ' + page_url + ' --------------------')
             print('-------------------- page --------------------')
-            flag = spider(page_url, db())
+            flag = spider(page_url, db(), user)
             quit()
             if flag:
                 pass
