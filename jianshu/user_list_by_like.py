@@ -30,9 +30,12 @@ def spider(url, db):
     global error_num
     browser.get(url)
     html = browser.page_source
+    box = re.compile(box_pattern, re.I).findall(html)
 
     print(html)
     print(len(html))
+    print(box)
+    print(len(box))
     if len(html) > 18000:
         box = re.compile(box_pattern, re.I).findall(html)
         for box_item in box:
