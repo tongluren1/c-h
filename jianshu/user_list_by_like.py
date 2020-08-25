@@ -36,7 +36,6 @@ def spider(url, db, user):
     html = browser.page_source
     box = re.compile(box_pattern, re.I).findall(html)
 
-    print(html)
     print(box)
     print(len(box))
     if user['UserId'] == last_user['UserId'] and last_box_num == len(box) and last_box_num < 9:
@@ -109,13 +108,12 @@ for user in user_list:
         url = base_url + 'users/' + user['UserId'] + '/' + type_ + '?page={}'
         page = 1
         while page <= 99999:
-            page_url = 'https://www.jianshu.com/users/ea592a37efc5/following?page=24'
+            page_url = url.format(page)
             print('-------------------- page --------------------')
             print('-------------------- user: ' + user['UserId'] + ' page: ' + str(
                 page) + ' url: ' + page_url + ' --------------------')
             print('-------------------- page --------------------')
             flag = spider(page_url, db(), user)
-            quit()
             if flag:
                 pass
             else:
