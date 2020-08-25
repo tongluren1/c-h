@@ -22,21 +22,18 @@ browser = webdriver.Chrome(options=chrome_options)
 box_pattern = pattern_model['like_user_list']['box_pattern']
 des_pattern = pattern_model['like_user_list']['des_pattern']
 
-error_num = 0
 last_box_num = 0
 last_user = {'UserId':''}
 print('starttime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
 
 def spider(url, db, user):
-    global error_num
     global last_box_num
     global last_user
     browser.get(url)
     html = browser.page_source
     box = re.compile(box_pattern, re.I).findall(html)
 
-    print(box)
     print(len(box))
     if user['UserId'] == last_user['UserId'] and last_box_num == len(box) and last_box_num < 9:
         return False
@@ -87,12 +84,9 @@ def spider(url, db, user):
                 pass
                 # print(sql.encode('utf-8'))
         sleep(8)
-        error_num = 0
         last_user = user
     else:
-        if error_num > 2:
-            return False
-        error_num = error_num + 1
+        return False
     return True
 
 
