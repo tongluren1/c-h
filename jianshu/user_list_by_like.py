@@ -105,7 +105,7 @@ for user in user_list:
             print('-------------------- ' + str(page) + ' --------------------')
             print('-------------------- page --------------------')
             page_url = url.format(page)
-            page_url = 'https://www.jianshu.com/users/51b4ef597b53/followers?page=999999'
+            page_url = 'https://www.jianshu.com/users/4d7cbbe6aa86/followers?page=999999'
             flag = spider(page_url, db())
             quit()
             if flag:
