@@ -80,7 +80,7 @@ def spider(url, db, article):
 
 
 def getArticleList(db):
-    sql = "select ID, ArticleID, Title from jianshu_article_list where Status = 'NEW' order by ID desc;"
+    sql = "select ID, ArticleID, Title from jianshu_article_list where Status in ('NEW', 'RECENT_UPDATE') order by ID desc;"
     return db.get_rows(sql)
 
 
