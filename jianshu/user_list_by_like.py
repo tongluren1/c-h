@@ -11,10 +11,10 @@ from jianshu_config import base_url
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.db import db
 
-# 关闭当前文件进程
-os.system("ps -ef|grep "+__file__+"|awk '{print $2}'|xargs kill -9")
-# 关闭当 chrome 进程
-os.system("ps -ef|grep chrome|awk '{print $2}'|xargs kill -9")
+# # 关闭当前文件进程
+# os.system("ps -ef|grep "+__file__+"|awk '{print $2}'|xargs kill -9")
+# # 关闭当 chrome 进程
+# os.system("ps -ef|grep chrome|awk '{print $2}'|xargs kill -9")
 
 chrome_options = Options()
 # 设置chrome浏览器无界面模式

@@ -8,10 +8,10 @@ import re
 import json
 from jianshu_config import pattern_model
 
-# 关闭当前文件进程
-os.system("ps -ef|grep "+__file__+"|awk '{print $2}'|xargs kill -9")
-# 关闭当 chrome 进程
-os.system("ps -ef|grep chrome|awk '{print $2}'|xargs kill -9")
+# # 关闭当前文件进程
+# os.system("ps -ef|grep "+__file__+"|awk '{print $2}'|xargs kill -9")
+# # 关闭当 chrome 进程
+# os.system("ps -ef|grep chrome|awk '{print $2}'|xargs kill -9")
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.db import db
