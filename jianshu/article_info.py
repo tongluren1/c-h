@@ -38,6 +38,8 @@ def spider(url, db, article):
 
             tmp_list = {}
             status = 'DONE'
+            tmp_list['UID'] = str(article['UID'])
+            tmp_list['AID'] = str(article['ID'])
             tmp_list['DataJson'] = db.self_escape_string(json.dumps(data)).strip()
             tmp_list['LastUpdatedAt'] = datetime.datetime.fromtimestamp(data['last_updated_at']).strftime(
                 "%Y-%m-%d %H:%M:%S")
@@ -80,7 +82,7 @@ def spider(url, db, article):
 
 
 def getArticleList(db, page):
-    sql = "select ID, ArticleID, Title from jianshu_article_list where Status in ('NEW', 'RECENT_UPDATE') order by ID desc limit " + str(
+    sql = "select ID, UID, ArticleID, Title from jianshu_article_list where Status in ('NEW', 'RECENT_UPDATE') order by ID desc limit " + str(
         page) + ", 1000;"
     return db.get_rows(sql)
 
