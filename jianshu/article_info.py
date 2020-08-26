@@ -76,10 +76,12 @@ def spider(url, db, article):
                 status, article['ArticleID'])
             db.db_reconnect()
             db.query(sql)
+    sleep(8)
 
 
 def getArticleList(db, page):
-    sql = "select ID, ArticleID, Title from jianshu_article_list where Status in ('NEW', 'RECENT_UPDATE') order by ID desc limit " + str(page) +", 1000;"
+    sql = "select ID, ArticleID, Title from jianshu_article_list where Status in ('NEW', 'RECENT_UPDATE') order by ID desc limit " + str(
+        page) + ", 1000;"
     return db.get_rows(sql)
 
 
