@@ -157,19 +157,20 @@ for user in getUserList(db):
         print(update_sql.encode('utf-8'))
     else:
         recent_update = user['RecentUpdate']
-        recent_update = json.loads(recent_update)
-        for new_article in recent_update:
-            new_article_ID = list(new_article.keys())[0].replace('/p/', '')
-            new_article_title = list(new_article.values())[0]
-            new_article_title = db.self_escape_string(new_article_title)
+        if recent_update is not None:
+            recent_update = json.loads(recent_update)
+            for new_article in recent_update:
+                new_article_ID = list(new_article.keys())[0].replace('/p/', '')
+                new_article_title = list(new_article.values())[0]
+                new_article_title = db.self_escape_string(new_article_title)
 
-            new_article_sql = "INSERT INTO jianshu_article_list (ArticleID, UID, Title, Status, AddTime, UpdateTime) VALUES	('%s', %s, '%s', '%s', '%s', '%s') ON DUPLICATE KEY UPDATE Title = '%s';" % (
-                new_article_ID, user['ID'], new_article_title, 'RECENT_UPDATE',
-                time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
-                time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), new_article_title)
-            db.db_reconnect()
-            db.query(new_article_sql)
-            print(new_article_sql.encode('utf-8'))
+                new_article_sql = "INSERT INTO jianshu_article_list (ArticleID, UID, Title, Status, AddTime, UpdateTime) VALUES	('%s', %s, '%s', '%s', '%s', '%s') ON DUPLICATE KEY UPDATE Title = '%s';" % (
+                    new_article_ID, user['ID'], new_article_title, 'RECENT_UPDATE',
+                    time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+                    time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), new_article_title)
+                db.db_reconnect()
+                db.query(new_article_sql)
+                print(new_article_sql.encode('utf-8'))
 
 browser.quit()
 print('endtime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
