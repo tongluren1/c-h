@@ -17,6 +17,9 @@ pattern_model = {
             'CreateTime': '<span class="time" data-shared-at="(\S+?)T(\S+?)\+08:00">'
         }
     },
+    'article_info': {
+        'box_pattern': '(\{"dataManager":[\s\S]*?"\})</script>'
+    },
     'user_list': {
         'box_pattern': '(<div class="col-xs-8">[\s\S]*?</div>\s*?</div>\s*?</div>)',
         'des_pattern': {
