@@ -73,19 +73,25 @@ def spider(url, db, article):
                 pass
 
             sql = "update jianshu_article_list set Status = '%s' where ArticleID = '%s'" % (
-            status, article['ArticleID'])
+                status, article['ArticleID'])
             db.db_reconnect()
             db.query(sql)
             quit()
 
 
-def getArticleList(db):
-    sql = "select ID, ArticleID, Title from jianshu_article_list where Status in ('NEW', 'RECENT_UPDATE') order by ID desc;"
+def getArticleList(db, page):
+    sql = "select ID, ArticleID, Title from jianshu_article_list where Status in ('NEW', 'RECENT_UPDATE') order by ID desc limit " + page +", 1000;"
     return db.get_rows(sql)
 
 
-article_list = getArticleList(db())
+for page in range(1000):
+    article_list = getArticleList(db(), page)
 
-for article in article_list:
-    url = base_url + 'p/' + article['ArticleID']
-    spider(url, db(), article)
+    if len(article_list) < 1:
+        break
+    for article in article_list:
+        url = base_url + 'p/' + article['ArticleID']
+        spider(url, db(), article)
+
+browser.quit()
+print('endtime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
