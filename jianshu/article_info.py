@@ -76,7 +76,6 @@ def spider(url, db, article):
                 status, article['ArticleID'])
             db.db_reconnect()
             db.query(sql)
-            quit()
 
 
 def getArticleList(db, page):
