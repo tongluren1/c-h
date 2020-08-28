@@ -88,7 +88,7 @@ def spider(url, db, user):
             else:
                 pass
                 # print(sql.encode('utf-8'))
-        sleep(8)
+        sleep(1)
         last_user = user
     else:
         return False

@@ -123,7 +123,7 @@ def spider(url, db):
     if error_num > 0:
         return False
 
-    sleep(8)
+    sleep(1)
     return True
 
 

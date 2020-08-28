@@ -95,7 +95,7 @@ def spider(url, db, user):
             else:
                 pass
                 # print(sql.encode('utf-8'))
-        sleep(10)
+        sleep(1)
     return True
 
 
