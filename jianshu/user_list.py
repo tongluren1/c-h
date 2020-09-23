@@ -69,7 +69,7 @@ def spider(url, db):
             if len(RecentUpdate) > 0:
                 tmp_ = []
                 for Recent in RecentUpdate:
-                    tmp_.append('{"' + Recent[0] + '":"' + Recent[1] + '"}')
+                    tmp_.append('{"' + Recent[0] + '":"' + db.self_escape_string(Recent[1]) + '"}')
                 tmp_list['RecentUpdate'] = ','.join(tmp_)
                 tmp_list['RecentUpdate'] = '[' + tmp_list['RecentUpdate'] + ']'
                 tmp_list['RecentUpdate'] = db.self_escape_string(tmp_list['RecentUpdate'])
