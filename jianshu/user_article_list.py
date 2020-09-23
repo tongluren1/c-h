@@ -128,7 +128,7 @@ def spider(url, db):
 
 
 def getUserList(db):
-    sql = "select ID, UserId, NickName, HomeUrl, IsNewUser, RecentUpdate from jianshu_user order by ID DESC;"
+    sql = "select ID, UserId, NickName, HomeUrl, IsNewUser, RecentUpdate from jianshu_user where IsNewUser = 'NO' order by ID DESC;"
     return db.get_rows(sql)
 
 
@@ -156,7 +156,7 @@ for user in getUserList(db):
         print(update_sql.encode('utf-8'))
     else:
         recent_update = user['RecentUpdate']
-        if recent_update is not None:
+        if recent_update is not None and recent_update != '':
             recent_update = json.loads(recent_update)
             for new_article in recent_update:
                 new_article_ID = list(new_article.keys())[0].replace('/p/', '')
