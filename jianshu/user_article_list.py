@@ -139,8 +139,7 @@ for user in getUserList(db):
         url = 'https://www.jianshu.com/u/' + user['UserId'] + '?order_by=shared_at&page={}'
         while page <= 150:
             print('-------------------- page --------------------')
-            print('-------------------- ' + user['NickName'].encode('utf-8') + ' : ' + str(
-                page) + ' --------------------')
+            print('-------------------- ' + user['NickName'].encode('utf-8') + ' : ' + str(page) + ' --------------------')
             print('-------------------- page --------------------')
             page_url = url.format(page)
             print(page_url)
