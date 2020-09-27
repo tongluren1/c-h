@@ -75,7 +75,7 @@ def spider(url, db, article):
 
             sql = "update jianshu_article_list set Status = '%s' where ArticleID = '%s'" % (
                 status, article['ArticleID'])
-            db.re_connect()
+            db.db_reconnect()
             db.query(sql)
     sleep(1)
 

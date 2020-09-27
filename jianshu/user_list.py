@@ -104,12 +104,13 @@ urls = []
 page = 1
 url = 'https://www.jianshu.com/recommendations/users?page={}'
 
+db = db()
 while page <= 200:
     print('-------------------- page --------------------')
     print('-------------------- ' + str(page) + ' --------------------')
     print('-------------------- page --------------------')
     page_url = url.format(page)
-    flag = spider(page_url, db())
+    flag = spider(page_url, db)
     if flag:
         pass
     else:
@@ -117,4 +118,5 @@ while page <= 200:
     page = page + 1
 
 browser.quit()
+db.db_close()
 print('endtime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))

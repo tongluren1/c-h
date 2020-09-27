@@ -100,7 +100,8 @@ def getUserList(db):
     return db.get_rows(sql)
 
 
-user_list = getUserList(db());
+db = db()
+user_list = getUserList(db)
 type_list = ['following', 'followers']
 for user in user_list:
     for type_ in type_list:
@@ -112,14 +113,15 @@ for user in user_list:
             print('-------------------- user: ' + user['UserId'] + ' page: ' + str(
                 page) + ' url: ' + page_url + ' --------------------')
             print('-------------------- page --------------------')
-            flag = spider(page_url, db(), user)
+            flag = spider(page_url, db, user)
             if flag:
                 pass
             else:
                 break
             page = page + 1
         # url = base_url + 'users/' + user['UserId'] + '/' + type_
-        # flag = spider(url, db())
+        # flag = spider(url, db)
 
 browser.quit()
+db.db_close()
 print('endtime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))

@@ -172,4 +172,5 @@ for user in getUserList(db):
                 print(new_article_sql.encode('utf-8'))
 
 browser.quit()
+db.db_close()
 print('endtime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
