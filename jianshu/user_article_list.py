@@ -132,8 +132,8 @@ def getUserList(db):
     return db.get_rows(sql)
 
 
-db = db()
-for user in getUserList(db):
+for user in getUserList(db()):
+    db = db()
     if user['IsNewUser'] == 'YES':
         page = 1
         url = 'https://www.jianshu.com/u/' + user['UserId'] + '?order_by=shared_at&page={}'
@@ -170,7 +170,7 @@ for user in getUserList(db):
                 db.db_reconnect()
                 db.query(new_article_sql)
                 print(new_article_sql.encode('utf-8'))
+    db.db_close()
 
 browser.quit()
-db.db_close()
 print('endtime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))

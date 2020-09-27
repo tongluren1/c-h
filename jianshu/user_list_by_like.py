@@ -100,14 +100,14 @@ def getUserList(db):
     return db.get_rows(sql)
 
 
-db = db()
-user_list = getUserList(db)
+user_list = getUserList(db())
 type_list = ['following', 'followers']
 for user in user_list:
     for type_ in type_list:
         url = base_url + 'users/' + user['UserId'] + '/' + type_ + '?page={}'
         page = 1
         while page <= 99999:
+            db = db()
             page_url = url.format(page)
             print('-------------------- page --------------------')
             print('-------------------- user: ' + user['UserId'] + ' page: ' + str(
@@ -119,9 +119,9 @@ for user in user_list:
             else:
                 break
             page = page + 1
+            db.db_close()
         # url = base_url + 'users/' + user['UserId'] + '/' + type_
         # flag = spider(url, db)
 
 browser.quit()
-db.db_close()
 print('endtime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))

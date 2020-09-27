@@ -108,14 +108,14 @@ def getUserList(db):
     return db.get_rows(sql)
 
 
-db = db()
-user_list = getUserList(db)
+user_list = getUserList(db())
 for item in user_list:
+    db = db()
     url = base_url + item['HomeUrl']
     flag = spider(url, db, item)
     if flag:
         print(item['UserId'] + 'succ')
+    db.db_close()
 
 browser.quit()
-db.db_close()
 print('endtime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
