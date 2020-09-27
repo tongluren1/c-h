@@ -49,11 +49,7 @@ class db:
         self.db.close()
 
     def db_reconnect(self):
-        try:
-            self.db.ping()
-        except:
-            self.db()
-        # self.db.ping(reconnect=True)
+        self.db.ping(reconnect=True)
 
     def self_escape_string(self, string):
         return pymysql.escape_string(value=string)
