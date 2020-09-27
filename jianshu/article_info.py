@@ -86,18 +86,14 @@ def getArticleList(db, page):
     return db.get_rows(sql)
 
 
-db = db()
-
 for page in range(1000):
-    article_list = getArticleList(db, page)
+    article_list = getArticleList(db(), page)
 
     if len(article_list) < 1:
         break
     for article in article_list:
         url = base_url + 'p/' + article['ArticleID']
-        spider(url, db, article)
-
-db.db_close()
+        spider(url, db(), article)
 
 browser.quit()
 print('endtime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
