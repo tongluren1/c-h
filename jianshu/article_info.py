@@ -64,7 +64,6 @@ def spider(url, db, article):
             value_str = "'" + value_str + "'"
             sql = "insert into jianshu_article_info (%s) values (%s)" % (column_str, value_str)
             try:
-                db.db_reconnect()
                 db.query(sql)
             except BaseException:
                 status = 'FAILED'
@@ -76,7 +75,7 @@ def spider(url, db, article):
 
             sql = "update jianshu_article_list set Status = '%s' where ArticleID = '%s'" % (
                 status, article['ArticleID'])
-            db.db_reconnect()
+            db.re_connect()
             db.query(sql)
     sleep(1)
 
@@ -87,14 +86,18 @@ def getArticleList(db, page):
     return db.get_rows(sql)
 
 
+db = db()
+
 for page in range(1000):
-    article_list = getArticleList(db(), page)
+    article_list = getArticleList(db, page)
 
     if len(article_list) < 1:
         break
     for article in article_list:
         url = base_url + 'p/' + article['ArticleID']
-        spider(url, db(), article)
+        spider(url, db, article)
+
+db.db_close()
 
 browser.quit()
 print('endtime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
