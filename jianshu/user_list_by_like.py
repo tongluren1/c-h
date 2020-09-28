@@ -106,22 +106,22 @@ for user in user_list:
     for type_ in type_list:
         url = base_url + 'users/' + user['UserId'] + '/' + type_ + '?page={}'
         page = 1
+        db_ = db()
         while page <= 99999:
-            db = db()
             page_url = url.format(page)
             print('-------------------- page --------------------')
             print('-------------------- user: ' + user['UserId'] + ' page: ' + str(
                 page) + ' url: ' + page_url + ' --------------------')
             print('-------------------- page --------------------')
-            flag = spider(page_url, db, user)
+            flag = spider(page_url, db_, user)
             if flag:
                 pass
             else:
                 break
             page = page + 1
-            db.db_close()
         # url = base_url + 'users/' + user['UserId'] + '/' + type_
         # flag = spider(url, db)
+        db_.db_close()
 
 browser.quit()
 print('endtime:' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
