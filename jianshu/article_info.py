@@ -65,15 +65,24 @@ def spider(url, db, article):
             sql = "insert into jianshu_article_info (%s) values (%s)" % (column_str, value_str)
             try:
                 db.query(sql)
-                db.query('update jianshu_user set SucArticles = IFNULL(SucArticles, 0) + 1 where id = ' + article['UID'])
-                db.query("update jianshu_article_list set CommentsNum = '"+tmp_list['CommentsCount']+"', Wordage = '"+tmp_list['Wordage']+"', TotalRewardsCount = '"+tmp_list['TotalRewardsCount']+"', DownvotesCount = '"+tmp_list['DownvotesCount']+"', FeaturedCommentsCount = '"+tmp_list['FeaturedCommentsCount']+"', PaidType = '"+tmp_list['PaidType']+"', LikeNum = '"+tmp_list['LikesCount']+"', NotebookId = '"+tmp_list['NotebookId']+"', ViewsCount = '"+tmp_list['ViewsCount']+"', LastUpdatedAt = '"+tmp_list['LastUpdatedAt']+"', FirstSharedAt = '"+tmp_list['FirstSharedAt']+"' where ID = " + article['AID'])
             except BaseException:
                 status = 'FAILED'
                 print('------------- error ------------')
                 print(sql.encode('utf-8'))
                 print('------------- error ------------')
             else:
-                pass
+                db.query(
+                    'update jianshu_user set SucArticles = IFNULL(SucArticles, 0) + 1 where ID = ' + str(article['UID']))
+                db.query(
+                    "update jianshu_article_list set CommentsNum = '" + str(tmp_list['CommentsCount']) + "', Wordage = '" +
+                    str(tmp_list['Wordage']) + "', TotalRewardsCount = '" + str(tmp_list[
+                        'TotalRewardsCount']) + "', DownvotesCount = '" + str(tmp_list[
+                        'DownvotesCount']) + "', FeaturedCommentsCount = '" + str(tmp_list[
+                        'FeaturedCommentsCount']) + "', PaidType = '" + str(tmp_list['PaidType']) + "', LikeNum = '" +
+                    str(tmp_list['LikesCount']) + "', NotebookId = '" + str(tmp_list['NotebookId']) + "', ViewsCount = '" +
+                    str(tmp_list['ViewsCount']) + "', LastUpdatedAt = '" + str(tmp_list[
+                        'LastUpdatedAt']) + "', FirstSharedAt = '" + str(tmp_list['FirstSharedAt']) + "' where ID = " +
+                    str(article['ID']))
 
             sql = "update jianshu_article_list set Status = '%s' where ArticleID = '%s'" % (
                 status, article['ArticleID'])
