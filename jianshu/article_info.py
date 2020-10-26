@@ -64,6 +64,7 @@ def spider(url, db, article):
             value_str = "'" + value_str + "'"
             sql = "insert into jianshu_article_info (%s) values (%s)" % (column_str, value_str)
             try:
+                db.db_reconnect()
                 db.query(sql)
             except BaseException:
                 status = 'FAILED'
@@ -71,8 +72,10 @@ def spider(url, db, article):
                 print(sql.encode('utf-8'))
                 print('------------- error ------------')
             else:
+                db.db_reconnect()
                 db.query(
                     'update jianshu_user set SucArticles = IFNULL(SucArticles, 0) + 1 where ID = ' + str(article['UID']))
+                db.db_reconnect()
                 db.query(
                     "update jianshu_article_list set CommentsNum = '" + str(tmp_list['CommentsCount']) + "', Wordage = '" +
                     str(tmp_list['Wordage']) + "', TotalRewardsCount = '" + str(tmp_list[
